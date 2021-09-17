@@ -11,6 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RevelioLabs.Models;
+using Microsoft.EntityFrameworkCore;
+using RevelioLabs.Repositories;
 
 namespace RevelioLabs
 {
@@ -27,6 +30,8 @@ namespace RevelioLabs
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddDbContext<UserContext>(o => o.UseSqlite("Data source = users.db"));
+            services.AddScoped<IUserRepository,UserRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
